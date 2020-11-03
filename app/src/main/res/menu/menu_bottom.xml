@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    app:cnb_unselectedColor="#fff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/SMS"
+        android:title="SMS"
+        android:icon="@drawable/sms"
+        app:cnb_backgroundColor="#ff785b"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+    <item
+        android:id="@+id/E-mail"
+        android:title="E-mail"
+        android:icon="@drawable/email"
+        app:cnb_backgroundColor="#ff785b"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+    <item
+        android:id="@+id/Map"
+        android:title="Map"
+        android:icon="@drawable/placeholder"
+        app:cnb_backgroundColor="#ff785b"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+    <item
+        android:id="@+id/pic"
+        android:title="Camera"
+        android:icon="@drawable/camera"
+        app:cnb_backgroundColor="#ff785b"
+        app:cnb_iconColor="#fff"
+        app:cnb_textColor="#fff"
+        />
+
+
+</menu>
