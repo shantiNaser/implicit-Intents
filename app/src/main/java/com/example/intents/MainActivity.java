@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
        switch (i){
 
            case R.id.SMS:
-               Intent i1 = new Intent(Intent.ACTION_SENDTO,Uri.parse("sms:0597087763"));
-               i1.putExtra("sms_body","This is a Test Message");
+               Intent i1 = new Intent(this,AccSMS.class);
                startActivity(i1);
                break;
            case R.id.E_mail:
