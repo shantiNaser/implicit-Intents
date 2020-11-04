@@ -34,7 +34,7 @@ public class AccSMS extends AppCompatActivity {
                 i1.putExtra("sms_body",body);
                 startActivity(i1);
 
-               
+
 
             }
         });
