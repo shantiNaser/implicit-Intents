@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccSMS">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SMSFragment">
+
+    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/imageView"
@@ -57,7 +59,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="55dp"
         android:layout_marginBottom="187dp"
-        android:inputType="text" />
+        android:inputType="textMultiLine" />
 
     <TextView
         android:id="@+id/textView4"
@@ -79,6 +81,5 @@
         android:layout_marginBottom="84dp"
         android:background="#F0671A"
         android:text="Send" />
-
 
 </RelativeLayout>

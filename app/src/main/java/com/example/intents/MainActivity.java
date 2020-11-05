@@ -3,6 +3,7 @@ package com.example.intents;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity implements ChipNavigationBar.OnItemSelectedListener {
     ChipNavigationBar nav;
+    FragmentManager fg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
        switch (i){
 
            case R.id.SMS:
-               Intent i1 = new Intent(this,AccSMS.class);
-               startActivity(i1);
+              // Intent i1 = new Intent(this,AccSMS.class);
+              // startActivity(i1);
+               ff = new SMSFragment();
                break;
            case R.id.E_mail:
                System.out.println("Hello Wolrd 2");
@@ -48,6 +51,18 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
                Intent Choose = Intent.createChooser(i3,"Open Map");
                startActivity(i3);
                break;
+
+       }
+       if(ff!=null) {
+           fg = getSupportFragmentManager();
+           fg.beginTransaction()
+                   .replace(R.id.frag_contaner, ff)
+                   .commit();
+       }
+       else
+       {
+           System.out.println("Error in creating the fregment");
+
 
        }
 
