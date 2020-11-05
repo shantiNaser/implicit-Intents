@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
                ff = new SMSFragment();
                break;
            case R.id.E_mail:
-               System.out.println("Hello Wolrd 2");
+               ff = new EmailFragment();
                break;
 
            case R.id.Map:

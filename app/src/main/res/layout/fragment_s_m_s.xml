@@ -79,7 +79,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="57dp"
         android:layout_marginBottom="84dp"
-        android:background="#F0671A"
+        android:background="@drawable/rounded_corners"
         android:text="Send" />
 
 </RelativeLayout>
