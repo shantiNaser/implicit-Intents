@@ -1,16 +1,22 @@
 package com.example.intents;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +26,7 @@ import android.widget.EditText;
 public class SMSFragment extends Fragment {
     public EditText Ed1,Ed2;
     public Button b1;
-
+    Activity activity = getActivity();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +69,24 @@ public class SMSFragment extends Fragment {
 
 
     }
+    public static final int SMS_REQUEST_CODE = 123;
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode==123)
+        {
+            String phoneNum = Ed1.getText().toString();
+            String body = Ed2.getText().toString();
+            SmsManager s = SmsManager.getDefault();
+            s.sendTextMessage(phoneNum,null,body,null,null);
+            System.out.println("OK im send");
+           // Toast.makeText(activity,"SMS was sent Successfully",Toast.LENGTH_LONG).show();
+
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,11 +101,21 @@ public class SMSFragment extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNum = Ed1.getText().toString();
-                String body = Ed2.getText().toString();
-                Intent i1 = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+phoneNum));
-                i1.putExtra("sms_body",body);
-                startActivity(i1);
+                if (view.getId() == R.id.b1) {
+
+                    if (getActivity().checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
+                        requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 123);
+                    } else {
+                        String phoneNum = Ed1.getText().toString();
+                        String body = Ed2.getText().toString();
+                        SmsManager s = SmsManager.getDefault();
+                        s.sendTextMessage(phoneNum, null, body, null, null);
+
+                    }
+                    //Intent i1 = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+phoneNum));
+                    //i1.putExtra("sms_body",body);
+                    //startActivity(i1);
+                }
             }
         });
 
