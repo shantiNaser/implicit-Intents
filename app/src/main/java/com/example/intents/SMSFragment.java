@@ -95,7 +95,7 @@ public class SMSFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_s_m_s,container,false);
 
         Ed1 = (EditText) view.findViewById(R.id.Ed1);
-        Ed2 = (EditText) view.findViewById(R.id.Ed2);
+        Ed2 = (EditText) view.findViewById(R.id.F);
         b1 = (Button) view.findViewById(R.id.b1);
 
         b1.setOnClickListener(new View.OnClickListener() {

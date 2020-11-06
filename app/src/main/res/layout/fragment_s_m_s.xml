@@ -51,7 +51,7 @@
         tools:layout_editor_absoluteY="243dp" />
 
     <EditText
-        android:id="@+id/Ed2"
+        android:id="@+id/F"
         android:layout_width="269dp"
         android:layout_height="257dp"
         android:layout_alignParentStart="true"
