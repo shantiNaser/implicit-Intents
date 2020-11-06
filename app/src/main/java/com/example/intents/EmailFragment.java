@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +22,11 @@ import android.widget.RadioGroup;
  * Use the {@link EmailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmailFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class EmailFragment extends Fragment {
 
     public Button bb;
-    public RadioButton r1,r2;
-    public EditText E1,E2;
+    public RadioButton r1, r2;
+    public EditText E1, E2;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,40 +72,53 @@ public class EmailFragment extends Fragment implements CompoundButton.OnCheckedC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_email,container,false);
+        View view = inflater.inflate(R.layout.fragment_email, container, false);
 
-        r1 = (RadioButton)view.findViewById(R.id.r1);
-        r2 = (RadioButton)view.findViewById(R.id.r2);
-        E1 = (EditText)view.findViewById(R.id.EM);
-        E2 = (EditText)view.findViewById(R.id.EB);
+        r1 = (RadioButton) view.findViewById(R.id.r1);
+        r2 = (RadioButton) view.findViewById(R.id.r2);
+        E1 = (EditText) view.findViewById(R.id.EM);
+        E2 = (EditText) view.findViewById(R.id.EB);
+        bb = (Button) view.findViewById(R.id.bb);
 
-        r1.setOnCheckedChangeListener(this);
-        r2.setOnCheckedChangeListener(this);
 
+
+        r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+
+                    bb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String ee = E1.getText().toString();
+                            String bb = E2.getText().toString();
+                            String[] eee = ee.split("\n");
+                            Intent i1 = new Intent(Intent.ACTION_SENDTO);
+                            i1.setData(Uri.parse("mailto:" + eee[0]));
+                            i1.putExtra(Intent.EXTRA_CC, eee);
+                            i1.putExtra(Intent.EXTRA_TEXT, bb);
+                            startActivity(i1);
+
+                        }
+                    });
+                } else {
+
+                }
+
+                // end of if
+
+            }
+        });
 
 
         return view;
     }
 
-   
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-    }
 }
 
 
-//   bb = (Button) view.findViewById(R.id.bb);
-//
-//        bb.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i1 = new Intent(Intent.ACTION_SENDTO);
-//                i1.setData(Uri.parse("mailto:naser.shanti@outlook.com"));
-//                i1.putExtra(Intent.EXTRA_CC,new String[]{"nasershanti654@gmail.com","naser.shanti@outlook.com"});
-//                i1.putExtra(Intent.EXTRA_TEXT,"This is a Test from me");
-//                startActivity(i1);
-//            }
-//        });
-//
+
+
+
+
