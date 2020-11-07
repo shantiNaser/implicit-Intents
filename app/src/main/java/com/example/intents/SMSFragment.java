@@ -72,21 +72,29 @@ public class SMSFragment extends Fragment {
     public static final int SMS_REQUEST_CODE = 123;
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+@Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case SMS_REQUEST_CODE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    String phoneNum = Ed1.getText().toString();
+                    String body = Ed2.getText().toString();
+                    SmsManager s = SmsManager.getDefault();
+                    s.sendTextMessage(phoneNum, null, body, null, null);
+                    Toast.makeText(getContext(),"Sent was Done Successfully",Toast.LENGTH_LONG).show();
 
-        if(requestCode==123)
-        {
-            String phoneNum = Ed1.getText().toString();
-            String body = Ed2.getText().toString();
-            SmsManager s = SmsManager.getDefault();
-            s.sendTextMessage(phoneNum,null,body,null,null);
-            System.out.println("OK im send");
-           // Toast.makeText(activity,"SMS was sent Successfully",Toast.LENGTH_LONG).show();
 
+                    Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "SMS faild, Since it No Permesion", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,21 +109,21 @@ public class SMSFragment extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.b1) {
+
+                System.out.println("112");
 
                     if (getActivity().checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED) {
-                        requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 123);
+                        requestPermissions(new String[]{Manifest.permission.SEND_SMS},SMS_REQUEST_CODE );
                     } else {
                         String phoneNum = Ed1.getText().toString();
                         String body = Ed2.getText().toString();
                         SmsManager s = SmsManager.getDefault();
                         s.sendTextMessage(phoneNum, null, body, null, null);
+                        Toast.makeText(getContext(),"Sent was Done Successfully",Toast.LENGTH_LONG).show();
 
                     }
-                    //Intent i1 = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+phoneNum));
-                    //i1.putExtra("sms_body",body);
-                    //startActivity(i1);
-                }
+
+
             }
         });
 

@@ -1,6 +1,7 @@
 package com.example.intents;
 
 import android.content.Intent;
+import android.hardware.camera2.CameraDevice;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,13 +23,14 @@ import android.widget.Toast;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment implements View.OnClickListener {
+public class MapFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public EditText nameee,lot,llt;
     public Button button;
     public Switch s1,s2;
     public TextView inf,inf1;
     public int flag;
+    private View view;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -77,7 +79,7 @@ public class MapFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_map,container,false);
+        view = inflater.inflate(R.layout.fragment_map,container,false);
         nameee = (EditText) view.findViewById(R.id.nameee);
         lot = (EditText) view.findViewById(R.id.longt);
         llt = (EditText) view.findViewById(R.id.latt);
@@ -87,72 +89,77 @@ public class MapFragment extends Fragment implements View.OnClickListener {
         s1 = (Switch) view.findViewById(R.id.s1);
         s2 = (Switch) view.findViewById(R.id.s2);
 
+        s1.setOnCheckedChangeListener(this);
+        s2.setOnCheckedChangeListener(this);
 
-       s1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        button.setOnClickListener(this);
 
-               if(s1.isChecked()&&!s2.isChecked())
-               {
-                   inf.setVisibility(View.VISIBLE);
-                   lot.setVisibility(View.VISIBLE);
-                   llt.setVisibility(View.VISIBLE);
-
-                   button.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View view) {
-
-                           String l1 = llt.getText().toString();
-                           String l2 = lot.getText().toString();
-                           if(!l1.isEmpty()&&!l2.isEmpty())
-                           {
-                               Intent i3 = new Intent(Intent.ACTION_VIEW);
-                               i3.setData(Uri.parse("geo:"+l1+","+l2));
-                               Intent Choose = Intent.createChooser(i3,"Open Map");
-                               startActivity(i3);
-                           }
-                           else
-                           {
-                               Toast.makeText(getActivity(),"an requred filed was missing ",Toast.LENGTH_LONG).show();
-                           }
-
-                       }
-                   });
-
-
-               }
-
-               else if(s2.isChecked())
-               {
-                   System.out.println("S2 is checked");
-               }
-
-
-              else if(!s1.isChecked()&&!s2.isChecked())
-               {
-                   inf.setVisibility(View.INVISIBLE);
-                   lot.setVisibility(View.INVISIBLE);
-                   llt.setVisibility(View.INVISIBLE);
-                   inf1.setVisibility(View.INVISIBLE);
-                   nameee.setVisibility(View.INVISIBLE);
-               }
-
-             else if(s1.isChecked()&&s2.isChecked())
-               {
-                   Toast.makeText(getActivity(),"Only one way is allow",Toast.LENGTH_LONG).show();
-               }
-
-
-
-
-
-
-           }
-
-
-
-       });
-
+//
+//       s1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//           @Override
+//           public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//               if(s1.isChecked()&&!s2.isChecked())
+//               {
+//                   inf.setVisibility(View.VISIBLE);
+//                   lot.setVisibility(View.VISIBLE);
+//                   llt.setVisibility(View.VISIBLE);
+//
+//                   button.setOnClickListener(new View.OnClickListener() {
+//                       @Override
+//                       public void onClick(View view) {
+//
+//                           String l1 = llt.getText().toString();
+//                           String l2 = lot.getText().toString();
+//                           if(!l1.isEmpty()&&!l2.isEmpty())
+//                           {
+//                               Intent i3 = new Intent(Intent.ACTION_VIEW);
+//                               i3.setData(Uri.parse("geo:"+l1+","+l2));
+//                               Intent Choose = Intent.createChooser(i3,"Open Map");
+//                               startActivity(i3);
+//                           }
+//                           else
+//                           {
+//                               Toast.makeText(getActivity(),"an requred filed was missing ",Toast.LENGTH_LONG).show();
+//                           }
+//
+//                       }
+//                   });
+//
+//
+//               }
+//
+//               else if(s2.isChecked())
+//               {
+//                   System.out.println("S2 is checked");
+//               }
+//
+//
+//              else if(!s1.isChecked()&&!s2.isChecked())
+//               {
+//                   inf.setVisibility(View.INVISIBLE);
+//                   lot.setVisibility(View.INVISIBLE);
+//                   llt.setVisibility(View.INVISIBLE);
+//                   inf1.setVisibility(View.INVISIBLE);
+//                   nameee.setVisibility(View.INVISIBLE);
+//               }
+//
+//             else if(s1.isChecked()&&s2.isChecked())
+//               {
+//
+//               }
+//
+//
+//
+//
+//
+//
+//           }
+//
+//
+//
+//       });
+//
 
 
 
@@ -162,6 +169,67 @@ public class MapFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
+        if(s1.isChecked())
+        {
+            String l1 = llt.getText().toString();
+            String l2 = lot.getText().toString();
+            Intent i3 = new Intent(Intent.ACTION_VIEW);
+            i3.setData(Uri.parse("geo:"+l1+","+l2));
+            Intent Choose = Intent.createChooser(i3,"Open Map");
+            startActivity(i3);
+
+        }
+
+        else if(s2.isChecked())
+        {
+           String nn = nameee.getText().toString();
+           Intent i3 = new Intent(Intent.ACTION_VIEW);
+           i3.setData(Uri.parse("geo:0,0?q="+nn));
+           Intent Choose = Intent.createChooser(i3,"Open Map");
+           startActivity(i3);
+
+        }
+
+
+
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        if(compoundButton==s1)
+        {
+            if(b)
+            {
+                inf.setVisibility(View.VISIBLE);
+                lot.setVisibility(View.VISIBLE);
+                llt.setVisibility(View.VISIBLE);
+                s2.setChecked(false);
+
+            }
+            else if(!b)
+            {
+                inf.setVisibility(View.INVISIBLE);
+                lot.setVisibility(View.INVISIBLE);
+                llt.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        else if(compoundButton==s2)
+        {
+            if(b) {
+                inf1.setVisibility(View.VISIBLE);
+                nameee.setVisibility(View.VISIBLE);
+                s1.setChecked(false);
+            }
+            else if(!b)
+            {
+                inf1.setVisibility(View.INVISIBLE);
+                nameee.setVisibility(View.INVISIBLE);
+            }
+        }
 
 
     }

@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
 
     }
 
-public static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 123;
-public static  Uri imageUri;
+    public static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 123;
+    public static Uri imageUri;
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -68,72 +68,49 @@ public static  Uri imageUri;
     }
 
 
-
-
     @Override
     public void onItemSelected(int i) {
         Fragment ff = null;
 
-       switch (i){
+        switch (i) {
 
-           case R.id.SMS:
-              // Intent i1 = new Intent(this,AccSMS.class);
-              // startActivity(i1);
-               ff = new SMSFragment();
-               break;
-           case R.id.E_mail:
-               ff = new EmailFragment();
-               break;
+            case R.id.SMS:
+                ff = new SMSFragment();
+                break;
+            case R.id.E_mail:
+                ff = new EmailFragment();
+                break;
 
-           case R.id.Map:
-               ff = new MapFragment();
-//               Intent i3 = new Intent(Intent.ACTION_VIEW);
-//               i3.setData(Uri.parse("geo:32.2227,53.2621"));
-//               Intent Choose = Intent.createChooser(i3,"Open Map");
-//               startActivity(i3);
-               break;
+            case R.id.Map:
+                ff = new MapFragment();
+                break;
 
-           case  R.id.pic:
-               String fileName = "new-photo-name.jpg";
-               ContentValues values = new ContentValues();
-               values.put(MediaStore.Images.Media.TITLE, fileName);
-               values.put(MediaStore.Images.Media.DESCRIPTION,"Image capture by camera");
-               imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-               Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-               intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-               intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-               startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-               break;
+            case R.id.pic:
+                String fileName = "new-photo-name.jpg";
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, fileName);
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera");
+                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                break;
 
-       }
-       if(ff!=null) {
-           fg = getSupportFragmentManager();
-           fg.beginTransaction()
-                   .replace(R.id.frag_contaner, ff)
-                   .commit();
-       }
-       else
-       {
-           System.out.println("Error in creating the fregment");
+        }
+        if (ff != null) {
+            fg = getSupportFragmentManager();
+            fg.beginTransaction()
+                    .replace(R.id.frag_contaner, ff)
+                    .commit();
+        } else {
+            System.out.println("Error in creating the fregment");
 
 
-       }
+        }
 
 
     }
-
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//        if(item.getItemId()==R.id.SMS)
-//        {
-//            System.out.println("Im here");
-//
-//
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 }
+
+
