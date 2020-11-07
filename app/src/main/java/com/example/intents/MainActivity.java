@@ -6,21 +6,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.camera2.CameraDevice;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements ChipNavigationBar.OnItemSelectedListener {
     ChipNavigationBar nav;
@@ -40,32 +48,6 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
 
     }
 
-    public static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 123;
-    public static Uri imageUri;
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-
-            if (resultCode == RESULT_OK) {
-
-                //use imageUri here to access the image
-
-            } else if (resultCode == RESULT_CANCELED) {
-
-                Toast.makeText(this, "Picture was not taken", Toast.LENGTH_LONG).show();
-
-            } else {
-
-                Toast.makeText(this, "Picture was not taken", Toast.LENGTH_LONG).show();
-
-            }
-
-        }
-
-    }
 
 
     @Override
@@ -86,15 +68,7 @@ public class MainActivity extends AppCompatActivity implements ChipNavigationBar
                 break;
 
             case R.id.pic:
-                String fileName = "new-photo-name.jpg";
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, fileName);
-                values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera");
-                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                ff = new CameraFragment();
                 break;
 
         }
