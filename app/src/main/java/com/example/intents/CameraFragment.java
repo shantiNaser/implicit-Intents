@@ -1,9 +1,12 @@
 package com.example.intents;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -25,6 +28,8 @@ public class CameraFragment extends Fragment {
     private Button bt;
     private View view;
     private static final int pic_id = 123;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,27 +71,26 @@ public class CameraFragment extends Fragment {
         }
     }
 
-    public void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
         if (requestCode == pic_id) {
 
             try {
-                Bitmap photo = (Bitmap)data.getExtras()
+                Bitmap photo = (Bitmap) data.getExtras()
                         .get("data");
                 im.setImageBitmap(photo);
-            }catch (Exception ex)
-            {
-                Toast.makeText(getContext(),"Please save Photo after Take by press Tick",Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                Toast.makeText(getContext(), "Please save Photo after Take by press Tick", Toast.LENGTH_LONG).show();
             }
-
-
-
         }
+
+
+
     }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,6 +106,8 @@ public class CameraFragment extends Fragment {
 
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(camera_intent, pic_id);
+
+
 
             }
         });

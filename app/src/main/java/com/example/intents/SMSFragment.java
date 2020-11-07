@@ -80,12 +80,17 @@ public class SMSFragment extends Fragment {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     String phoneNum = Ed1.getText().toString();
                     String body = Ed2.getText().toString();
-                    SmsManager s = SmsManager.getDefault();
-                    s.sendTextMessage(phoneNum, null, body, null, null);
-                    Toast.makeText(getContext(),"Sent was Done Successfully",Toast.LENGTH_LONG).show();
+                    if(!phoneNum.isEmpty()&&!body.isEmpty()) {
+                        SmsManager s = SmsManager.getDefault();
+                        s.sendTextMessage(phoneNum, null, body, null, null);
+                        Toast.makeText(getContext(), "Sent was Done Successfully", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),"an important Field was Missing",Toast.LENGTH_LONG).show();
+                    }
 
 
-                    Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), "SMS faild, Since it No Permesion", Toast.LENGTH_LONG).show();
                     return;
@@ -117,9 +122,15 @@ public class SMSFragment extends Fragment {
                     } else {
                         String phoneNum = Ed1.getText().toString();
                         String body = Ed2.getText().toString();
-                        SmsManager s = SmsManager.getDefault();
-                        s.sendTextMessage(phoneNum, null, body, null, null);
-                        Toast.makeText(getContext(),"Sent was Done Successfully",Toast.LENGTH_LONG).show();
+                        if(!phoneNum.isEmpty()&&!body.isEmpty()) {
+                            SmsManager s = SmsManager.getDefault();
+                            s.sendTextMessage(phoneNum, null, body, null, null);
+                            Toast.makeText(getContext(), "Sent was Done Successfully", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(),"an important Field was Missing",Toast.LENGTH_LONG).show();
+                        }
 
                     }
 
